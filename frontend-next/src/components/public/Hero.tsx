@@ -30,15 +30,22 @@ export default function Hero() {
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row items-center gap-4 mb-16 w-full sm:w-auto">
           <Link
+            href="/prototype-3d"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-charcoal text-white hover:bg-black font-bold text-base px-8 py-4 rounded-full transition-all duration-300 shadow-xl hover:shadow-2xl border border-yellow-golden/50 group"
+          >
+            <span className="w-2.5 h-2.5 rounded-full bg-yellow-golden animate-ping mr-1" />
+            <span>3D EXPLODED TEARDOWN</span>
+            <ArrowRight className="w-5 h-5 text-yellow-golden group-hover:translate-x-1 transition-transform" />
+          </Link>
+          <Link
             href="/working"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-yellow-golden text-charcoal hover:bg-yellow-hover font-bold text-base px-8 py-4 rounded-full transition-all duration-300 shadow hover:shadow-md group"
           >
-            <span>EXPLORE THE PIPELINE</span>
-            <ArrowRight className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+            <span>EXPLORE PIPELINE</span>
           </Link>
           <Link
             href="/login"
-            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-charcoal text-white hover:bg-black font-semibold text-base px-8 py-4 rounded-full transition-all duration-300 shadow hover:shadow-md"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-warm-white text-charcoal hover:bg-white border border-light-surface font-semibold text-base px-8 py-4 rounded-full transition-all duration-300 shadow-sm"
           >
             <span>MANAGER LOGIN</span>
           </Link>
