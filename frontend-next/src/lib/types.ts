@@ -62,6 +62,7 @@ export interface WorkerProfileData {
   health_profile: HealthProfile;
   ppe_details: PPEDetails;
   exposure_ledger: ExposureLedger;
+  avatar_url?: string;
   created_at?: string;
   updated_at?: string;
 }
@@ -105,6 +106,8 @@ export interface ShiftScanRecord {
     statutory_tier: StatutoryTier;
     measurement_confidence: MeasurementConfidence;
     is_single_shift_critical: boolean;
+    hazard_score_5pt?: number;
+    hazard_level_simple?: string;
   };
   advisory?: {
     summary_banner?: string;
