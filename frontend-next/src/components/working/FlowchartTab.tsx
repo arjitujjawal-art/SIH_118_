@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { ArrowDown, CheckCircle2, Info, AlertTriangle } from "lucide-react";
 
@@ -9,75 +7,75 @@ export default function FlowchartTab() {
   const stages = [
     {
       num: "01",
-      title: "Assign Band & Resolve Batch Identity",
-      short: "QR pairing to employee profile and batch calibration matrix.",
-      inputs: "Employee ID, refinery plant unit, wristband serial barcode (QR).",
-      process: "Resolves active badge assignment, records deployment date, and links baseline calibration curve.",
-      outputs: "Active worker-band link in database (`band_lifecycle_day` = 1).",
-      limitations: "Assignment selects applicable calibration curve; it does not calibrate the physical chemistry on its own.",
+      title: "Washing Leaves",
+      short: "Clean fresh leaves using distilled water.",
+      inputs: "Fresh leaves containing anthocyanin, Distilled water.",
+      process: "Wash the leaves gently with distilled water to remove dust and surface contaminants. Remove excess water using clean tissue or filter paper.",
+      outputs: "Cleaned, slightly damp fresh leaves.",
+      limitations: "Do not use harsh chemicals or excessive physical force to prevent premature cell breakdown.",
     },
     {
       num: "02",
-      title: "Capture Start-of-Shift Baseline",
-      short: "Initial optical density (ΔE_start) recording.",
-      inputs: "Smartphone camera photo of blue wristband under standardized ambient light.",
-      process: "Evaluates lighting quality, segments Patch A & B, computes baseline ΔE_start (typically 0.2–0.6).",
-      outputs: "Active Shift record (`ShiftScanModel` with `shift_status` = ACTIVE).",
-      limitations: "Requires camera alignment within overlay guide.",
+      title: "Controlled Drying",
+      short: "Dry leaves at 40-45 °C.",
+      inputs: "Washed leaves, Oven/dryer.",
+      process: "Spread the leaves in a single layer and dry at approximately 40–45 °C until they reach a constant dry mass. Avoid direct sunlight.",
+      outputs: "Dried leaves (recorded final dry mass).",
+      limitations: "Excessive heat can degrade anthocyanin. Freeze-drying is preferred if available.",
     },
     {
       num: "03",
-      title: "Wear Passive Dosimeter Wristband",
-      short: "Continuous passive exposure during work shift.",
-      inputs: "Ambient airborne H₂S gas in refinery operating unit.",
-      process: "H₂S diffuses through gas-permeable cartridge window and reacts irreversibly with SbCl₃-anthocyanin composite.",
-      outputs: "Irreversible optical darkening on Patch A.",
-      limitations: "Passive cumulative dosimeter. Does not emit acoustic or vibration alarms for peak surges.",
+      title: "Grinding",
+      short: "Process into fine powder.",
+      inputs: "Dried leaves, Mortar and pestle or mechanical grinder.",
+      process: "Grind the dried leaves into a fine powder. Minimize exposure to strong light during grinding. Store in an opaque/amber container.",
+      outputs: "Standardized dried leaf powder.",
+      limitations: "Must be stored properly to prevent moisture absorption and light-induced degradation before extraction.",
     },
     {
       num: "04",
-      title: "Capture End-of-Shift State",
-      short: "Terminal shift optical photograph capture.",
-      inputs: "Smartphone photo of wristband upon leaving plant unit.",
-      process: "QR decoding, glare filter, blue substrate chromaticity check, and pixel extraction.",
-      outputs: "Raw terminal image coordinates and RGB color matrices.",
-      limitations: "Damaged, heavily soiled, or occluded badges trigger manual supervisor inspection.",
+      title: "Ultrasonic Extraction",
+      short: "Aqueous extraction without ethanol.",
+      inputs: "2.00 g dried leaf powder, 50 mL distilled water, Ultrasonic bath.",
+      process: "Mix powder with distilled water. Place in an ultrasonic bath for approximately 30 minutes, keeping the temperature below 30 °C.",
+      outputs: "Aqueous extraction mixture (solid-liquid slurry).",
+      limitations: "Do not adjust the extraction mixture to pH 7 at this stage. Avoid thermal degradation.",
     },
     {
       num: "05",
-      title: "Sample Patches A, B, C & Evaluate Quality",
-      short: "Multi-patch segmentation and integrity grading.",
-      inputs: "Extracted RGB regions for active spot, control blank, and humidity indicator.",
-      process: "Computes Patch B drift (ΔE_B) and Patch C color state to identify sunlight fade or seal breach.",
-      outputs: "Measurement confidence classification (HIGH, MEDIUM, LOW, or INVALID).",
-      limitations: "Extreme sunlight exposure may cause Patch B drift exceeding 0.70 ΔE.",
+      title: "Centrifugation",
+      short: "Mechanically separate solids.",
+      inputs: "Extraction mixture, Centrifuge, tubes.",
+      process: "Transfer mixture to tubes and centrifuge at 3500 rpm for 15 minutes. Carefully collect the supernatant.",
+      outputs: "Clarified supernatant (separated from solid residue).",
+      limitations: "Must not disturb the solid pellet during collection.",
     },
     {
       num: "06",
-      title: "Calculate CIELAB Net Colour Difference (ΔE_net)",
-      short: "Deterministic differential dosimetry subtraction.",
-      inputs: "ΔE_start, ΔE_end, Patch B drift.",
-      process: "ΔE_net = max(0.0, ΔE_end - ΔE_start - max(0.0, Patch_B_drift - 0.05)).",
-      outputs: "Net optical color difference (dimensionless CIELAB units).",
-      limitations: "Negative differences are clamped to zero with baseline anomaly flag.",
+      title: "Filtration",
+      short: "Final isolation of crude extract.",
+      inputs: "Collected supernatant, Filter paper/membrane filter, Funnel.",
+      process: "Filter the supernatant through filter paper, and optionally through a finer membrane filter, into an amber container.",
+      outputs: "Clear crude aqueous anthocyanin extract.",
+      limitations: "Ensure extract is kept in an opaque/amber bottle immediately to protect from light.",
     },
     {
       num: "07",
-      title: "Apply Calibration & Assess Uncertainty Envelopes",
-      short: "Dose mapping with dynamic uncertainty bounds.",
-      inputs: "ΔE_net, shift duration (hours), Patch integrity margin.",
-      process: "Dose_nominal = 2.15 × ΔE_net + 0.08 × (ΔE_net^1.5); expands to low–high bounds based on Patch B/C.",
-      outputs: "Shift dose range (`dose_low–dose_high ppm·h`) and TWA range (`twa_low–twa_high ppm`).",
-      limitations: "Without eligible calibration version, UI shows ΔE index rather than fabricated ppm dose.",
+      title: "pH Optimization",
+      short: "Adjust pH sequentially to find stable purple.",
+      inputs: "Crude extract (divided into 5 samples), Dilute NaOH, Dilute citric acid.",
+      process: "Adjust samples to pH 5.0, 5.5, 6.0, 6.5, and 7.0 slowly. Allow equilibration for 15-30 minutes in darkness.",
+      outputs: "Five pH-stabilized aqueous extracts.",
+      limitations: "Avoid adding large quantities of NaOH at once. Correct overshoots carefully with citric acid.",
     },
     {
       num: "08",
-      title: "Save Reading, Update Ledgers & Trigger Statutory Alerts",
-      short: "Longitudinal database update and real-time SSE broadcast.",
-      inputs: "Calculated shift metrics, worker profile, ambient telemetry.",
-      process: "Updates rolling 7-day/30-day/90-day ledger. Classifies Tier 1/2/3. Triggers OISD Form-A if Tier 3.",
-      outputs: "Stored shift scan, updated worker dossier, and SSE event broadcast to Manager Control Room.",
-      limitations: "Requires network connectivity for database sync.",
+      title: "Evaluation & Exposure",
+      short: "Color measurement and H₂S detection.",
+      inputs: "Optimized extracts, H₂S gas, Color measurement tools (RGB/HSV/L*a*b*).",
+      process: "Identify the strongest and most stable purple. Use this optimal extract for controlled H₂S exposure, recording the transition to Red/Pink.",
+      outputs: "Quantified color change response (ΔColor).",
+      limitations: "H₂S is highly toxic. Must only be performed in appropriate laboratory setups with proper safety controls.",
     },
   ];
 
@@ -85,10 +83,10 @@ export default function FlowchartTab() {
     <div className="space-y-12">
       <div className="text-center max-w-2xl mx-auto">
         <h3 className="font-display text-3xl uppercase tracking-tight text-charcoal">
-          8-Stage End-to-End Processing Pipeline
+          8-Stage Extraction & Testing Pipeline
         </h3>
         <p className="text-sm text-sage-muted mt-2">
-          Click any stage to inspect its specific inputs, mathematical processing, outputs, and limitations.
+          Click any stage to inspect its specific inputs, physical/chemical processing, outputs, and limitations.
         </p>
       </div>
 
@@ -133,7 +131,7 @@ export default function FlowchartTab() {
             <span className="text-xs font-mono font-bold text-teal-deep px-2.5 py-1 rounded bg-teal-light">
               STAGE {stages[selectedStage].num} SPECIFICATION
             </span>
-            <span className="text-xs text-sage-muted">Deterministic Pipeline</span>
+            <span className="text-xs text-sage-muted">MOP Pipeline</span>
           </div>
 
           <h3 className="font-display text-3xl uppercase tracking-tight text-charcoal mb-4">
@@ -166,7 +164,7 @@ export default function FlowchartTab() {
               <div className="flex items-start gap-2 text-xs text-amber-900 bg-amber-50 p-3 rounded-xl border border-amber-200">
                 <AlertTriangle className="w-4 h-4 shrink-0 text-amber-600 mt-0.5" />
                 <div>
-                  <strong className="font-semibold">Limitations & Domain Constraint:</strong> {stages[selectedStage].limitations}
+                  <strong className="font-semibold">Limitations & Controls:</strong> {stages[selectedStage].limitations}
                 </div>
               </div>
             </div>

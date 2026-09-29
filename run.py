@@ -68,13 +68,14 @@ if __name__ == "__main__":
 
     backend_dir = str(BASE_DIR / "backend")
     frontend_dir = str(BASE_DIR / "frontend")
+    reload_dirs = [d for d in [backend_dir, frontend_dir] if os.path.exists(d)]
 
     uvicorn.run(
         "backend.main:app",
         host="127.0.0.1",
         port=8000,
         reload=True,
-        reload_dirs=[backend_dir, frontend_dir],
+        reload_dirs=reload_dirs,
         reload_includes=["*.py", "*.html", "*.css", "*.js", "*.json"],
         reload_excludes=[
             "*.db",

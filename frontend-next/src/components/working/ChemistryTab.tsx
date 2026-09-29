@@ -5,10 +5,10 @@ export default function ChemistryTab() {
     <div className="space-y-12 max-w-5xl mx-auto">
       <div className="text-center max-w-2xl mx-auto">
         <h3 className="font-display text-3xl uppercase tracking-tight text-charcoal">
-          SbCl₃–Anthocyanin Colorimetric Chemistry
+          Aqueous Anthocyanin Chemistry
         </h3>
         <p className="text-sm text-sage-muted mt-2">
-          Laboratory benchmark formulation based on published research and deterministic optical models.
+          Ethanol-free extraction and pH optimization for H₂S detection.
         </p>
       </div>
 
@@ -17,7 +17,7 @@ export default function ChemistryTab() {
         <div className="flex items-center gap-3 border-b border-light-surface pb-4">
           <FlaskConical className="w-6 h-6 text-teal-deep" />
           <h4 className="font-display text-2xl uppercase tracking-tight text-charcoal">
-            Formulation & Optical Quantification (CIELAB)
+            Chemical Principle & Color Transition
           </h4>
         </div>
 
@@ -25,20 +25,20 @@ export default function ChemistryTab() {
           <div className="space-y-3">
             <h5 className="font-bold text-charcoal">Chemical Reaction Mechanism:</h5>
             <p className="text-sage-muted leading-relaxed text-xs">
-              Antimony trichloride (SbCl₃) complexes with cyanidin-based anthocyanins extracted from fresh purple cabbage (50% ethanol/water). When exposed to Hydrogen Sulfide ($H_2S$), the reaction produces insoluble antimony trisulfide ($Sb_2S_3$), generating an irreversible color transition from red/violet to deep orange-brown.
+              Anthocyanin is extracted from fresh leaves using 100% distilled water. The extract is then optimized to a specific pH (between 5.0 and 7.0) to achieve a strong and stable purple coloration. When exposed to Hydrogen Sulfide (H₂S), the gas alters the chemical environment, triggering a structural change in the anthocyanin molecule.
             </p>
             <div className="p-3 bg-warm-white rounded-xl border border-light-surface font-mono text-xs text-charcoal">
-              2 SbCl₃ + 3 H₂S → Sb₂S₃ ↓ + 6 HCl
+              Purple Anthocyanin + H₂S → Red/Pink (via pH/environment change)
             </div>
           </div>
 
           <div className="space-y-3">
-            <h5 className="font-bold text-charcoal">CIELAB ΔE Color Quantification:</h5>
+            <h5 className="font-bold text-charcoal">Colorimetric Quantification:</h5>
             <p className="text-sage-muted leading-relaxed text-xs">
-              The smartphone converts RGB color space into device-independent CIELAB ($L^*, a^*, b^*$). Net optical shift is computed through differential Euclidean distance:
+              The color transition is evaluated quantitatively. Rather than relying on human perception, digital sensors (or smartphones) capture identical sample images under controlled lighting to compute the color difference (ΔColor) in various color spaces.
             </p>
             <div className="p-3 bg-warm-white rounded-xl border border-light-surface font-mono text-xs text-charcoal">
-              ΔE = √[ (L* - L₀*)² + (a* - a₀*)² + (b* - b₀*)² ]
+              Measurement via RGB, HSV, and CIE L*a*b* values
             </div>
           </div>
         </div>
@@ -46,70 +46,71 @@ export default function ChemistryTab() {
 
       {/* 4 Categorized Research Blocks */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        {/* Block 1: Published Findings */}
+        {/* Block 1: Extraction Solvent */}
         <div className="bg-warm-white rounded-2xl p-6 border border-light-surface card-hover-lift">
           <div className="flex items-center gap-2 text-xs font-mono font-bold text-teal-deep mb-3 uppercase">
             <BookOpen className="w-4 h-4" />
-            1. Published Findings (Literature)
+            1. Extraction Medium
           </div>
           <h4 className="font-display text-xl uppercase tracking-tight text-charcoal mb-3">
-            Molecules 2023, 28, 5044
+            100% Aqueous Extraction
           </h4>
           <ul className="space-y-2 text-xs text-sage-muted leading-relaxed list-disc list-inside">
-            <li>Tested SbCl₃ concentrations: 0.05, 0.10, 0.20, 0.50, and 1.00 wt%.</li>
-            <li>Selected optimal formulation: <strong>0.5 wt% SbCl₃ + 4 wt% anthocyanin</strong>.</li>
-            <li>Published laboratory limit of detection: <strong>200 ppb</strong> in controlled gas chamber.</li>
-            <li>Demonstrated monotonic ΔE progression across the 1–10 ppm exposure range.</li>
+            <li>Zero ethanol is used during the extraction process.</li>
+            <li>Solvent is purely distilled/deionized water.</li>
+            <li>2.00 g dried leaf powder to 50 mL distilled water ratio (1:25).</li>
+            <li>Ultrasonic bath processing for 30 minutes at &lt;30 °C.</li>
           </ul>
         </div>
 
-        {/* Block 2: Proposed Project Design */}
+        {/* Block 2: pH Optimization */}
         <div className="bg-warm-white rounded-2xl p-6 border border-light-surface card-hover-lift">
           <div className="flex items-center gap-2 text-xs font-mono font-bold text-teal-deep mb-3 uppercase">
             <FlaskConical className="w-4 h-4" />
-            2. Proposed Project Design
+            2. pH Optimization
           </div>
           <h4 className="font-display text-xl uppercase tracking-tight text-charcoal mb-3">
-            Triple-Patch Wristband Cartridge
+            Finding Stable Purple
           </h4>
           <ul className="space-y-2 text-xs text-sage-muted leading-relaxed list-disc list-inside">
-            <li>Physical isolation: sealed cartridge prevents any epidermal contact with SbCl₃.</li>
-            <li>Patch A: Active detection spot (SbCl₃ + anthocyanin composite).</li>
-            <li>Patch B: Reference control blank (anthocyanin only) for sunlight drift compensation.</li>
-            <li>Patch C: Chemical interferent & humidity seal indicator.</li>
+            <li>Crude extract is divided and tested at pH 5.0, 5.5, 6.0, 6.5, and 7.0.</li>
+            <li>Adjusted using dilute NaOH or dilute citric acid.</li>
+            <li>Equilibrated for 15-30 minutes in darkness.</li>
+            <li>Goal: identify strongest, most stable purple color for baseline.</li>
           </ul>
         </div>
 
-        {/* Block 3: Team-Validated Results */}
+        {/* Block 3: Experimental Control */}
         <div className="bg-warm-white rounded-2xl p-6 border border-light-surface card-hover-lift">
           <div className="flex items-center gap-2 text-xs font-mono font-bold text-emerald-700 mb-3 uppercase">
             <CheckCircle className="w-4 h-4" />
-            3. Team-Validated Implementation
+            3. Critical Controls
           </div>
           <h4 className="font-display text-xl uppercase tracking-tight text-charcoal mb-3">
-            Deterministic Dosimetry Engine
+            Standardization Requirements
           </h4>
           <ul className="space-y-2 text-xs text-sage-muted leading-relaxed list-disc list-inside">
-            <li>Pure Python zero-LLM dosimetry math ensuring 100% deterministic calculation.</li>
-            <li>3-Layer MLP neural network (`h2s_strip_model.json`) running in &lt;2 ms.</li>
-            <li>HSV blue substrate chromaticity rejection for webcam image security.</li>
-            <li>Uncertainty envelopes (±10% to ±25%) replacing deceptive single numbers.</li>
+            <li>Constant leaf-to-water ratio and extraction temperature.</li>
+            <li>Consistent sonication (3500 rpm for 15 min) and filtration.</li>
+            <li>Identical lighting, camera settings, and sample volume for color measurement.</li>
+            <li>Storage in amber/opaque containers to prevent photolytic degradation.</li>
           </ul>
         </div>
 
-        {/* Block 4: Pending Validation */}
+        {/* Block 4: H2S Detection */}
         <div className="bg-warm-white rounded-2xl p-6 border border-light-surface card-hover-lift">
           <div className="flex items-center gap-2 text-xs font-mono font-bold text-amber-700 mb-3 uppercase">
             <Clock className="w-4 h-4" />
-            4. Pending Validation
+            4. H₂S Response
           </div>
           <h4 className="font-display text-xl uppercase tracking-tight text-charcoal mb-3">
-            Field Refinery Pilot Verification
+            Target Gas Exposure
           </h4>
           <ul className="space-y-2 text-xs text-sage-muted leading-relaxed list-disc list-inside">
-            <li>Long-term ambient aging across 5 full shifts in high-humidity monsoon conditions.</li>
-            <li>Cross-sensitivity testing with trace sulfur dioxide ($SO_2$) and mercaptans.</li>
-            <li>Batch-to-batch variation calibration across commercial cabbage anthocyanin lots.</li>
+            <li>Selected optimal purple condition is exposed to controlled H₂S gas.</li>
+            <li>Record initial and final pH, RGB, HSV, and L*a*b* values.</li>
+            <li>Observe distinct color shift from Purple to Red/Pink.</li>
+            <li>Strict safety protocols: highly toxic H₂S tested only in ventilated lab setups.</li>
           </ul>
         </div>
       </div>

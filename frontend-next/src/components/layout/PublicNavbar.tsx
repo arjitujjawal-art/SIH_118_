@@ -13,7 +13,11 @@ export default function PublicNavbar() {
   const { user } = useAuth();
 
   return (
-    <header className="fixed top-0 left-0 right-0 h-20 bg-white/90 backdrop-blur-md z-50 border-b border-light-surface flex items-center px-6 lg:px-12 transition-all">
+    <header className={`fixed top-0 left-0 right-0 h-20 z-50 flex items-center px-6 lg:px-12 transition-all ${
+      pathname === "/working"
+        ? "bg-transparent border-transparent"
+        : "bg-white/90 backdrop-blur-md border-b border-light-surface"
+    }`}>
       <div className="max-w-7xl mx-auto w-full flex items-center justify-between">
         {/* Brand / Logo */}
         <Link href="/" className="flex items-center gap-2 group">

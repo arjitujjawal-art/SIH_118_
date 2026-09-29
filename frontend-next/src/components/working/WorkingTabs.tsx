@@ -8,17 +8,17 @@ import ChemistryTab from "./ChemistryTab";
 import ComparisonTab from "./ComparisonTab";
 import { GitFork, Image as ImageIcon, FlaskConical, Scale } from "lucide-react";
 
-type TabKey = "flowchart" | "images" | "chemistry" | "comparison";
+type TabKey = "chemistry" | "comparison";
 
 export default function WorkingTabs() {
   const searchParams = useSearchParams();
   const router = useRouter();
 
   const tabParam = searchParams.get("tab") as TabKey | null;
-  const [activeTab, setActiveTab] = useState<TabKey>("flowchart");
+  const [activeTab, setActiveTab] = useState<TabKey>("chemistry");
 
   useEffect(() => {
-    if (tabParam && ["flowchart", "images", "chemistry", "comparison"].includes(tabParam)) {
+    if (tabParam && ["chemistry", "comparison"].includes(tabParam)) {
       setActiveTab(tabParam);
     }
   }, [tabParam]);
@@ -29,8 +29,6 @@ export default function WorkingTabs() {
   };
 
   const tabs: Array<{ key: TabKey; label: string; icon: any }> = [
-    { key: "flowchart", label: "Flowchart", icon: GitFork },
-    { key: "images", label: "Images", icon: ImageIcon },
     { key: "chemistry", label: "Chemistry", icon: FlaskConical },
     { key: "comparison", label: "Comparison", icon: Scale },
   ];
@@ -69,8 +67,6 @@ export default function WorkingTabs() {
 
         {/* Tab Content Display */}
         <div className="min-h-[500px]">
-          {activeTab === "flowchart" && <FlowchartTab />}
-          {activeTab === "images" && <ImagesTab />}
           {activeTab === "chemistry" && <ChemistryTab />}
           {activeTab === "comparison" && <ComparisonTab />}
         </div>

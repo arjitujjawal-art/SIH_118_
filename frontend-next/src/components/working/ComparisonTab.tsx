@@ -1,36 +1,36 @@
 export default function ComparisonTab() {
   const comparisons = [
     {
-      approach: "SbCl₃–Anthocyanin Composite",
-      role: "Active colorimetric sensing layer (Patch A)",
-      evidence: "Molecules 2023, 28, 5044; reported 200 ppb lab LOD and ~1–10 ppm monotonic ΔE response.",
-      limitations: "Irreversible darkening; SbCl₃ is toxic and requires non-skin contact physical cartridge housing.",
-      status: "Selected Laboratory Benchmark",
+      approach: "Aqueous Extraction (100% Water)",
+      role: "Proposed Green Method",
+      evidence: "Extracts polar anthocyanin pigments effectively using ultrasonic assistance.",
+      limitations: "Extracts may spoil faster than alcohol-based methods; requires proper storage (amber bottle, cool temps).",
+      status: "Selected Method",
       statusColor: "bg-teal-light text-teal-deep border-teal-deep/30",
     },
     {
-      approach: "Anthocyanin-Only Substrate",
-      role: "Reference blank drift control (Patch B)",
-      evidence: "Empirical control; cyanidin pigments degrade under UV sunlight and humidity independent of H₂S.",
-      limitations: "Zero sensitivity to low-concentration H₂S; serves exclusively as an environmental drift baseline.",
-      status: "Selected Control Mechanism",
-      statusColor: "bg-teal-light text-teal-deep border-teal-deep/30",
-    },
-    {
-      approach: "Lead Acetate [Pb(C₂H₃O₂)₂]",
-      role: "Traditional paper strip indicator",
-      evidence: "ASTM D2420, historical standard for H₂S presence forming brownish-black Lead Sulfide (PbS).",
-      limitations: "High neurotoxicity, cumulative heavy metal bioaccumulation, hazardous disposal constraints in field operations.",
-      status: "Excluded (Toxicity / Safety)",
-      statusColor: "bg-red-50 text-red-700 border-red-200",
-    },
-    {
-      approach: "Lead Chloride [PbCl₂]",
-      role: "Requires confirmation",
-      evidence: "Inorganic lead halide forming PbS in research literature; distinct chemical precursor from acetate.",
-      limitations: "Environmental hazard; heavy metal regulatory restrictions under OSHA and Indian refinery rules.",
-      status: "Excluded / Not Adopted",
+      approach: "Ethanol/Methanol Extraction",
+      role: "Traditional Solvent Method",
+      evidence: "Commonly used in literature; provides higher yields of some hydrophobic compounds.",
+      limitations: "Uses volatile organic solvents (VOCs) which are flammable, toxic, and environmentally harmful.",
+      status: "Excluded (Safety/Environmental)",
       statusColor: "bg-gray-100 text-gray-700 border-gray-300",
+    },
+    {
+      approach: "Direct pH 7 Adjustment during Extraction",
+      role: "Immediate Neutralization",
+      evidence: "Simplifies process by combining extraction and optimization into one step.",
+      limitations: "Risks immediate degradation of anthocyanin during sonication and heating. Misses the optimal purple point which may be between pH 5 and 6.5.",
+      status: "Excluded (Stability Risks)",
+      statusColor: "bg-gray-100 text-gray-700 border-gray-300",
+    },
+    {
+      approach: "Post-Extraction pH Screening (pH 5.0 - 7.0)",
+      role: "Controlled Optimization",
+      evidence: "Ensures extraction happens at natural acidic pH, then carefully adjusts to find the most stable purple baseline.",
+      limitations: "Requires multiple sample divisions and careful titration with NaOH/Citric acid.",
+      status: "Selected Method",
+      statusColor: "bg-teal-light text-teal-deep border-teal-deep/30",
     },
   ];
 
@@ -38,10 +38,10 @@ export default function ComparisonTab() {
     <div className="space-y-8">
       <div className="text-center max-w-2xl mx-auto">
         <h3 className="font-display text-3xl uppercase tracking-tight text-charcoal">
-          Formulation & Material Comparison
+          Extraction Methodology Comparison
         </h3>
         <p className="text-sm text-sage-muted mt-2">
-          Evaluating alternative colorimetric approaches, baseline controls, and statutory safety limitations.
+          Evaluating alternative solvents and pH adjustment approaches for anthocyanin extraction.
         </p>
       </div>
 
@@ -51,8 +51,8 @@ export default function ComparisonTab() {
             <thead>
               <tr className="bg-warm-white border-b border-light-surface text-xs font-mono font-bold uppercase text-charcoal">
                 <th className="p-4 pl-6">Approach</th>
-                <th className="p-4">Operational Role</th>
-                <th className="p-4">Scientific Evidence</th>
+                <th className="p-4">Role</th>
+                <th className="p-4">Rationale</th>
                 <th className="p-4">Limitations</th>
                 <th className="p-4 pr-6">Project Status</th>
               </tr>

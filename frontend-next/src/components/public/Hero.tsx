@@ -44,54 +44,83 @@ export default function Hero() {
           </Link>
         </div>
 
-        {/* Wristband Hardware Prototype Showcase */}
-        <div className="w-full max-w-4xl bg-white rounded-3xl p-6 sm:p-8 border border-light-surface shadow-2xl card-hover-lift text-left">
+        {/* MOP Process Showcase */}
+        <div className="w-full max-w-5xl bg-white rounded-3xl p-6 sm:p-8 border border-light-surface shadow-2xl card-hover-lift text-left">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-light-surface pb-4 mb-6">
             <div>
-              <div className="text-xs font-bold uppercase tracking-wider text-teal-deep">Hardware Architecture</div>
-              <h3 className="font-display text-2xl sm:text-3xl uppercase tracking-tight text-charcoal">Physical Wristband & Colorimetric Cartridge</h3>
+              <div className="text-xs font-bold uppercase tracking-wider text-teal-deep">Laboratory Process</div>
+              <h3 className="font-display text-2xl sm:text-3xl uppercase tracking-tight text-charcoal">Lead-Free Organic Extraction</h3>
             </div>
             <span className="text-[11px] font-semibold px-3 py-1 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-300 self-start sm:self-auto font-mono flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-              Hardware Prototype Layout
+              Green Chemistry
             </span>
           </div>
 
-          {/* Actual Hardware Prototype Image */}
-          <div className="bg-warm-white rounded-2xl p-4 sm:p-6 border border-light-surface mb-6 flex flex-col items-center">
-            <div className="relative w-full max-w-2xl overflow-hidden rounded-xl shadow-lg border border-charcoal/10 bg-black flex items-center justify-center">
-              <img
-                src="/images/wristband_prototype.jpg"
-                alt="H2S Colorimetric Dosimeter Wristband Hardware Prototype with QR Code, Expiry Patch, Reactive Strip, and Reference Scale"
-                className="w-full h-auto object-contain max-h-[380px] select-none hover:scale-[1.02] transition-transform duration-500"
-              />
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+            <div className="bg-warm-white rounded-2xl p-4 border border-light-surface flex flex-col items-center">
+              <div className="relative w-full h-48 md:h-64 overflow-hidden rounded-xl shadow border border-charcoal/10 bg-black flex items-center justify-center">
+                <img
+                  src="/lab%20setup.jpeg"
+                  alt="Laboratory Setup"
+                  className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-500"
+                />
+              </div>
+              <div className="mt-4 text-center">
+                <div className="text-[10px] font-mono font-bold text-teal-deep uppercase">01 / PREPARATION</div>
+                <div className="text-sm font-semibold text-charcoal mt-1">Initial Laboratory Setup</div>
+              </div>
             </div>
             
-            {/* Diagram Annotations / Callout Badges */}
-            <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 w-full max-w-2xl mt-4 text-center">
-              <div className="bg-white p-2.5 rounded-xl border border-light-surface shadow-sm">
-                <div className="text-[10px] font-mono font-bold text-teal-deep uppercase">01 / QR CODE</div>
-                <div className="text-[11px] font-semibold text-charcoal mt-0.5">Worker & Unit Link</div>
+            <div className="bg-warm-white rounded-2xl p-4 border border-light-surface flex flex-col items-center">
+              <div className="relative w-full h-48 md:h-64 overflow-hidden rounded-xl shadow border border-charcoal/10 bg-black flex items-center justify-center">
+                <video
+                  src="/filtering%20of%20centrifuged%20antrocynin%20solution%20extracted%20from%20red%20cabbage.mp4"
+                  controls
+                  autoPlay
+                  loop
+                  muted
+                  className="w-full h-full object-cover"
+                />
               </div>
-              <div className="bg-white p-2.5 rounded-xl border border-light-surface shadow-sm">
-                <div className="text-[10px] font-mono font-bold text-teal-deep uppercase">02 / EXPIRY PATCH</div>
-                <div className="text-[11px] font-semibold text-charcoal mt-0.5">5-Day Shelf Integrity</div>
+              <div className="mt-4 text-center">
+                <div className="text-[10px] font-mono font-bold text-teal-deep uppercase">02 / SEPARATION</div>
+                <div className="text-sm font-semibold text-charcoal mt-1">Filtration Process</div>
               </div>
-              <div className="bg-white p-2.5 rounded-xl border border-light-surface shadow-sm">
-                <div className="text-[10px] font-mono font-bold text-teal-deep uppercase">03 / REACTIVE STRIP</div>
-                <div className="text-[11px] font-semibold text-charcoal mt-0.5">SbCl₃ + Anthocyanin</div>
+            </div>
+            
+            <div className="bg-warm-white rounded-2xl p-4 border border-light-surface flex flex-col items-center">
+              <div className="relative w-full h-48 md:h-64 overflow-hidden rounded-xl shadow border border-charcoal/10 bg-black flex items-center justify-center">
+                <img
+                  src="/ultra%20sound%20bagth%20in%20sonicator.jpeg"
+                  alt="Ultrasonic Bath"
+                  className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-500"
+                />
               </div>
-              <div className="bg-white p-2.5 rounded-xl border border-light-surface shadow-sm">
-                <div className="text-[10px] font-mono font-bold text-teal-deep uppercase">04 / REFERENCE SCALE</div>
-                <div className="text-[11px] font-semibold text-charcoal mt-0.5">0–120 ppm·h Range</div>
+              <div className="mt-4 text-center">
+                <div className="text-[10px] font-mono font-bold text-teal-deep uppercase">03 / EXTRACTION</div>
+                <div className="text-sm font-semibold text-charcoal mt-1">Ultrasonic Bath Sonication</div>
+              </div>
+            </div>
+            
+            <div className="bg-warm-white rounded-2xl p-4 border border-light-surface flex flex-col items-center">
+              <div className="relative w-full h-48 md:h-64 overflow-hidden rounded-xl shadow border border-charcoal/10 bg-black flex items-center justify-center">
+                <img
+                  src="/strip%20color%20change%20in%20reacting%20with%20acid%20and%20base.jpeg"
+                  alt="Color Change"
+                  className="w-full h-full object-cover hover:scale-[1.02] transition-transform duration-500"
+                />
+              </div>
+              <div className="mt-4 text-center">
+                <div className="text-[10px] font-mono font-bold text-teal-deep uppercase">04 / REACTION</div>
+                <div className="text-sm font-semibold text-charcoal mt-1">Strip Colorimetric Response</div>
               </div>
             </div>
           </div>
 
-          {/* Research Prototype Note */}
           <div className="flex items-start gap-3 text-xs text-sage-muted bg-warm-white p-3.5 rounded-lg border border-light-surface">
             <span className="font-bold text-charcoal shrink-0">CRITICAL NOTE:</span>
-            <span>Research prototype for cumulative exposure assessment. Not a continuous gas alarm or real-time personal gas sniffer.</span>
+            <span>Aqueous, ethanol-free extraction creates a safer, lead-free organic formulation for H₂S dosimetric sensing.</span>
           </div>
         </div>
       </div>

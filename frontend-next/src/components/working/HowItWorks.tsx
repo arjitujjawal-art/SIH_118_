@@ -5,21 +5,21 @@ export default function HowItWorks() {
   const steps = [
     {
       num: "01",
-      title: "ASSIGN & CAPTURE",
-      desc: "Link the worker profile and physical wristband QR code. The smartphone camera captures the initial baseline optical density (ΔE_start) and starts the active shift in the control room.",
-      sub: "Day 1–5 Lifecycle tracking initialized.",
+      title: "LEAVES TO EXTRACT",
+      desc: "Wash, dry at 40-45°C, and grind the leaves. Use an ultrasonic bath (2g powder to 50mL distilled water) for 30 minutes at under 30°C to safely extract anthocyanin.",
+      sub: "No ethanol is used in this 100% aqueous extraction.",
     },
     {
       num: "02",
-      title: "WEAR & READ",
-      desc: "The worker wears the sealed dosimeter cartridge in the refinery unit. At shift conclusion, the smartphone optical scanner captures the terminal state, evaluating image quality and Patch B/C integrity.",
-      sub: "Rejects glare (>2.5%) and unaligned substrates.",
+      title: "OPTIMIZE pH",
+      desc: "Centrifuge and filter to obtain the crude aqueous extract. Divide the sample and use dilute NaOH and Citric Acid to find the most stable purple state between pH 5.0 and 7.0.",
+      sub: "Target condition for H₂S testing established.",
     },
     {
       num: "03",
-      title: "ANALYSE & RECORD",
-      desc: "The deterministic engine computes differential net darkening (ΔE_net), resolves eligible calibration curves, updates the rolling 7d/30d/90d ledgers, and assigns statutory risk tiers.",
-      sub: "Zero-LLM mathematical rigor.",
+      title: "H₂S EXPOSURE",
+      desc: "Expose the optimal purple solution to controlled hydrogen sulfide. The chemical environment shifts, causing a distinct colorimetric transition to Red/Pink.",
+      sub: "Color change quantified via RGB, HSV, and CIE L*a*b*.",
     },
   ];
 
@@ -32,19 +32,36 @@ export default function HowItWorks() {
             SUMMARY WORKFLOW
           </span>
           <h2 className="font-display text-5xl sm:text-6xl uppercase tracking-tight text-charcoal leading-tightest">
-            HOW IT WORKS.
+            THE MOP.
           </h2>
           <p className="text-sm text-sage-muted leading-relaxed">
-            Three deterministic steps bridging physical chemistry and refinery occupational safety records.
+            Three core milestones defining the anthocyanin extraction and color-response preparation stage.
           </p>
           <div className="pt-4">
             <Link
               href="/login"
-              className="inline-flex items-center gap-2 text-sm font-bold text-charcoal hover:text-teal-deep group"
+              className="inline-flex items-center gap-2 text-sm font-bold text-charcoal hover:text-teal-deep group mb-8"
             >
-              <span>Launch Platform</span>
+              <span>Back to Dashboard</span>
               <ArrowRight className="w-4 h-4 text-yellow-golden group-hover:translate-x-1 transition-transform" />
             </Link>
+          </div>
+
+          {/* Video Demonstration (Bottom Left) */}
+          <div className="w-full bg-black rounded-2xl overflow-hidden shadow-2xl border border-light-surface mt-8 relative group">
+            <div className="absolute inset-0 z-10 pointer-events-none p-4 flex items-end">
+              <span className="text-white/50 font-display uppercase tracking-widest text-sm font-bold">
+                COLOR RESPONSE
+              </span>
+            </div>
+            <video
+              src="/Demonstrating_gas_detection_stri.mp4"
+              autoPlay
+              loop
+              muted
+              playsInline
+              className="w-full aspect-video object-cover pointer-events-none"
+            />
           </div>
         </div>
 
