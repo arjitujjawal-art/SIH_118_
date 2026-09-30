@@ -7,10 +7,17 @@ import {
 } from "./types";
 
 const getApiBase = () => {
+  let url = "";
   if (typeof window === "undefined") {
-    return process.env.INTERNAL_API_URL || "http://127.0.0.1:8000";
+    url = process.env.INTERNAL_API_URL || process.env.BACKEND_URL || "http://127.0.0.1:8000";
+  } else {
+    url = process.env.NEXT_PUBLIC_API_URL || "";
   }
-  return process.env.NEXT_PUBLIC_API_URL || "";
+  url = url.trim().replace(/\/+$/, "");
+  if (url && !url.startsWith("http://") && !url.startsWith("https://") && !url.startsWith("/")) {
+    url = `https://${url}`;
+  }
+  return url;
 };
 
 export async function fetchApi<T>(
