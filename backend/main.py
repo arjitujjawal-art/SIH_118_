@@ -732,7 +732,7 @@ def health_check():
         "system": settings.PROJECT_NAME,
         "app": settings.PROJECT_NAME,
         "version": settings.VERSION,
-        "groq_configured": bool(settings.GROQ_API_KEY),
-        "active_groq_model": settings.GROQ_MODEL,
+        "groq_configured": bool(settings.GROQ_API_KEY or os.environ.get("GROQ_API_KEY")),
+        "active_groq_model": settings.GROQ_MODEL or os.environ.get("GROQ_MODEL", "qwen/qwen3.8-27b"),
         "database": "connected"
     }

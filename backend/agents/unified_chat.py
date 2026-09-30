@@ -191,7 +191,13 @@ Retrieved Regulatory Safety Reference:
 
 Provide an empathetic, clear, structured response with immediate practical actions and first-aid steps if the worker describes any symptoms (e.g. sleepiness, fatigue, eye stinging, smell loss, coughing). Keep it clear, helpful, and formatted with bullet points.
 """
-                for test_model in [settings.GROQ_MODEL, "llama-3.3-70b-versatile", "llama-3.1-8b-instant"]:
+                candidate_models = [settings.GROQ_MODEL, "qwen/qwen3.8-27b", "openai/gpt-oss-120b", "openai/gpt-oss-20b", "llama-3.3-70b-versatile", "llama-3.1-8b-instant"]
+                models_to_try = []
+                for m in candidate_models:
+                    if m and m not in models_to_try:
+                        models_to_try.append(m)
+
+                for test_model in models_to_try:
                     try:
                         response = self.groq_client.chat.completions.create(
                             model=test_model,
