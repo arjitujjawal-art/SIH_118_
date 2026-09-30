@@ -1,6 +1,7 @@
 import { Suspense } from "react";
 import PublicNavbar from "@/components/layout/PublicNavbar";
 import Footer from "@/components/layout/Footer";
+import MopHeader from "@/components/working/MopHeader";
 import HowItWorks from "@/components/working/HowItWorks";
 import WorkingTabs from "@/components/working/WorkingTabs";
 
@@ -21,6 +22,9 @@ export default function WorkingPage() {
             className="w-full h-full object-cover"
           />
         </section>
+
+        {/* THE MOP (Method of Preparation) Architecture Header */}
+        <MopHeader />
 
         {/* Storytelling Pipeline */}
         <section className="py-24 px-6 lg:px-12 max-w-6xl mx-auto space-y-32">
