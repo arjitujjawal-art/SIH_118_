@@ -322,8 +322,9 @@ export default function ScrollyDashboard() {
               top: `${currentMilestone.pinPosition.y}%`,
               left: `${currentMilestone.pinPosition.x}%`,
             }}
-            onMouseEnter={() => setActiveLayer("reactive")}
+            onMouseEnter={() => setActiveLayer(currentMilestone.id)}
             onMouseLeave={() => setActiveLayer(null)}
+            onClick={() => setActiveLayer(activeLayer === currentMilestone.id ? null : currentMilestone.id)}
           >
             <div className="relative -translate-x-1/2 -translate-y-1/2 flex items-center gap-3">
               <div className="relative w-7 h-7 flex items-center justify-center">

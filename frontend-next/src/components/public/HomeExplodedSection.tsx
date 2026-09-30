@@ -53,7 +53,7 @@ const MILESTONES: ComponentMilestone[] = [
       { label: "Formulation", value: "Lead-Free Bio-Anthocyanin" },
       { label: "Wear Period", value: "7-Day Rotation" },
     ],
-    pinPosition: { x: 50, y: 48 },
+    pinPosition: { x: 44, y: 48 },
   },
   {
     id: "shield",
@@ -73,7 +73,7 @@ const MILESTONES: ComponentMilestone[] = [
       { label: "Gas Flow", value: "Porous H₂S Diffusion" },
       { label: "Protection", value: "Environmental Shield" },
     ],
-    pinPosition: { x: 42, y: 36 },
+    pinPosition: { x: 38, y: 34 },
   },
   {
     id: "faceplate",
@@ -93,7 +93,7 @@ const MILESTONES: ComponentMilestone[] = [
       { label: "Scan Method", value: "Smartphone Camera" },
       { label: "Ledger Sync", value: "Instant Cloud Tracking" },
     ],
-    pinPosition: { x: 26, y: 36 },
+    pinPosition: { x: 28, y: 38 },
   },
   {
     id: "expiry",
@@ -113,7 +113,7 @@ const MILESTONES: ComponentMilestone[] = [
       { label: "Time Window", value: "7-Day Color Fade" },
       { label: "Safety Goal", value: "Freshness Verification" },
     ],
-    pinPosition: { x: 44, y: 36 },
+    pinPosition: { x: 38, y: 44 },
   },
   {
     id: "reactive",
@@ -133,7 +133,7 @@ const MILESTONES: ComponentMilestone[] = [
       { label: "Color Response", value: "Irreversible Shift" },
       { label: "Target Gas", value: "Hydrogen Sulfide (H₂S)" },
     ],
-    pinPosition: { x: 68, y: 36 },
+    pinPosition: { x: 48, y: 48 },
   },
   {
     id: "comparator",
@@ -153,7 +153,7 @@ const MILESTONES: ComponentMilestone[] = [
       { label: "Lighting Role", value: "Low-Light Compensation" },
       { label: "AI Reading", value: "Appropriate Exposure LOD" },
     ],
-    pinPosition: { x: 50, y: 64 },
+    pinPosition: { x: 44, y: 64 },
   },
 ];
 
@@ -236,6 +236,48 @@ export default function HomeExplodedSection() {
             onLayerHover={(name) => setActiveLayer(name)}
           />
         </div>
+
+        {/* ======================================================== */}
+        {/* PINNED 3D CALLOUT ANCHOR PIN (Animated pointer on layer)  */}
+        {/* ======================================================== */}
+        {scrollProgress > 0.15 && currentMilestone && (
+          <div
+            className="hidden sm:block absolute z-20 pointer-events-none transition-all duration-700 ease-out"
+            style={{
+              top: `${currentMilestone.pinPosition.y}%`,
+              left: `${currentMilestone.pinPosition.x}%`,
+              opacity: explodedUiOpacity,
+            }}
+          >
+            <div
+              className="relative -translate-x-1/2 -translate-y-1/2 flex items-center gap-3 pointer-events-auto group cursor-pointer"
+              onMouseEnter={() => setActiveLayer(currentMilestone.id)}
+              onMouseLeave={() => setActiveLayer(null)}
+              onClick={() =>
+                setActiveLayer(
+                  activeLayer === currentMilestone.id ? null : currentMilestone.id
+                )
+              }
+            >
+              {/* Animated Target Dot with Radar Pulse */}
+              <div className="relative w-8 h-8 flex items-center justify-center">
+                <span className="w-full h-full rounded-full bg-yellow-golden/50 animate-ping absolute" />
+                <span className="w-4 h-4 rounded-full bg-yellow-golden shadow-lg border-2 border-charcoal relative z-10 group-hover:scale-125 transition-transform" />
+              </div>
+
+              {/* Callout Info Pill */}
+              <div className="bg-charcoal/90 text-white backdrop-blur-xl px-3.5 py-1.5 rounded-xl border border-yellow-golden/40 shadow-2xl text-left transition-all duration-300 group-hover:scale-105 group-hover:border-yellow-golden">
+                <div className="text-[9px] font-mono text-yellow-golden font-bold uppercase tracking-wider flex items-center gap-1.5">
+                  <span className="w-1.5 h-1.5 rounded-full bg-yellow-golden animate-pulse" />
+                  ACTIVE LAYER
+                </div>
+                <div className="text-xs font-bold text-white whitespace-nowrap">
+                  {currentMilestone.layerTag}
+                </div>
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* ======================================================== */}
         {/* 2. INITIAL HERO VIEW (Left Photo + Right Header Text)    */}
@@ -347,6 +389,7 @@ export default function HomeExplodedSection() {
               <div className="flex items-center gap-1 bg-white/90 backdrop-blur-xl p-1.5 rounded-full border border-light-surface shadow-md overflow-x-auto max-w-full">
                 <button
                   onClick={() => scrollToProgress(0.0)}
+                  onMouseEnter={() => setActiveLayer(null)}
                   className={`px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all ${
                     scrollProgress < 0.18
                       ? "bg-charcoal text-white shadow-sm"
@@ -357,6 +400,8 @@ export default function HomeExplodedSection() {
                 </button>
                 <button
                   onClick={() => scrollToProgress(0.26)}
+                  onMouseEnter={() => setActiveLayer("shield")}
+                  onMouseLeave={() => setActiveLayer(null)}
                   className={`px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all ${
                     scrollProgress >= 0.18 && scrollProgress < 0.35
                       ? "bg-charcoal text-white shadow-sm"
@@ -367,6 +412,8 @@ export default function HomeExplodedSection() {
                 </button>
                 <button
                   onClick={() => scrollToProgress(0.43)}
+                  onMouseEnter={() => setActiveLayer("faceplate")}
+                  onMouseLeave={() => setActiveLayer(null)}
                   className={`px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all ${
                     scrollProgress >= 0.35 && scrollProgress < 0.52
                       ? "bg-charcoal text-white shadow-sm"
@@ -377,6 +424,8 @@ export default function HomeExplodedSection() {
                 </button>
                 <button
                   onClick={() => scrollToProgress(0.60)}
+                  onMouseEnter={() => setActiveLayer("expiry")}
+                  onMouseLeave={() => setActiveLayer(null)}
                   className={`px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all ${
                     scrollProgress >= 0.52 && scrollProgress < 0.68
                       ? "bg-charcoal text-white shadow-sm"
@@ -387,6 +436,8 @@ export default function HomeExplodedSection() {
                 </button>
                 <button
                   onClick={() => scrollToProgress(0.76)}
+                  onMouseEnter={() => setActiveLayer("reactive")}
+                  onMouseLeave={() => setActiveLayer(null)}
                   className={`px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all ${
                     scrollProgress >= 0.68 && scrollProgress < 0.85
                       ? "bg-charcoal text-white shadow-sm"
@@ -397,6 +448,8 @@ export default function HomeExplodedSection() {
                 </button>
                 <button
                   onClick={() => scrollToProgress(0.92)}
+                  onMouseEnter={() => setActiveLayer("comparator")}
+                  onMouseLeave={() => setActiveLayer(null)}
                   className={`px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all ${
                     scrollProgress >= 0.85
                       ? "bg-charcoal text-white shadow-sm"
