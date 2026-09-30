@@ -9,7 +9,7 @@ def test_health_endpoint():
     assert res.status_code == 200
     data = res.json()
     assert data["status"] == "healthy"
-    assert "Rakshak" in data["system"]
+    assert "STRELA" in data["system"] or "Rakshak" in data["system"]
 
 def test_unified_chat_endpoint():
     # Test conversational query

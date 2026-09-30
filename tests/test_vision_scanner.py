@@ -70,7 +70,7 @@ def test_reject_non_blue_strip():
     res = vision_scanner.analyze_badge_image(non_badge_bytes)
     assert res["success"] is False
     assert res["strip_detected"] is False
-    assert "No valid Rakshak dosimeter strip detected" in res["error"]
+    assert "No valid STRELA dosimeter strip detected" in res["error"] or "No valid Rakshak dosimeter strip detected" in res["error"]
 
 def test_accept_blue_badge_image():
     # Valid blue dosimeter strip image
@@ -103,4 +103,4 @@ def test_analyze_image_api_endpoint_with_invalid_photo():
     data = response.json()
     assert data["success"] is False
     assert data["strip_detected"] is False
-    assert "No valid Rakshak dosimeter strip detected" in data["error"]
+    assert "No valid STRELA dosimeter strip detected" in data["error"]

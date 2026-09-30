@@ -1,6 +1,6 @@
-# 🧪 Rakshak Sample Scans & Printable QR Badges
+# 🧪 STRELA Sample Scans & Printable QR Badges
 
-This directory provides real test data for judges, evaluators, and developers to test the **Rakshak AI Optical Dosimeter Scanner**.
+This directory provides real test data for judges, evaluators, and developers to test the **STRELA AI Optical Dosimeter Scanner** (supported by **Rakshak AI**).
 
 ---
 

@@ -1,4 +1,5 @@
-# 🛡️ Rakshak (रक्षक) — H₂S Exposure Advisory & Plant Safety Platform
+# 🛡️ STRELA — H₂S Exposure Advisory & Plant Safety Platform
+### Powered by Rakshak (रक्षक) AI Safety Intelligence
 
 > **Smart India Hackathon (SIH 2026)**  
 > **Domain:** Industrial Health & Safety · Petroleum Refining & Hazardous Chemical Facilities  
@@ -13,10 +14,11 @@ In petroleum refining and petrochemical processing, **Hydrogen Sulfide ($H_2S$)*
 
 Traditional industrial monitoring relies on bulky battery-powered sensors or hazardous **lead-acetate paper strips** ($Pb(CH_3COO)_2$), which pose toxic disposal liabilities and require manual, error-prone record-keeping.
 
-**Rakshak (रक्षक)** solves this by uniting **sustainable green chemistry** with **modern computer vision and AI industrial intelligence**:
-1. **Zero-Power Wearable Dosimeter Band:** Uses non-toxic, 100% aqueous anthocyanin plant extract to accumulate airborne $H_2S$ into an irreversible, visible color shift.
-2. **AI Optical Scanner (OpenCV + Neural Network):** Decodes worker QR IDs, validates the substrate, checks lighting/glare quality, measures perceptual CIELAB $\Delta E$, and estimates exact gas exposure time.
+**STRELA** solves this by uniting **sustainable green chemistry** with **modern computer vision and AI industrial intelligence**:
+1. **STRELA Zero-Power Wearable Dosimeter Band:** Uses non-toxic, 100% aqueous anthocyanin plant extract to accumulate airborne $H_2S$ into an irreversible, visible color shift.
+2. **STRELA AI Optical Scanner (OpenCV + Neural Network):** Decodes worker QR IDs, validates the substrate, checks lighting/glare quality, measures perceptual CIELAB $\Delta E$, and estimates exact gas exposure time.
 3. **Control Room Safety Platform:** Aggregates scans across refinery units into a live **2D fugitive leak triangulation heatmap**, enforces statutory OISD/DGMS safety tiers, and generates **1-click audit-ready OISD-STD-105 Form-A incident PDFs**.
+4. **Rakshak (रक्षक) AI Safety Copilot:** Multi-turn conversational safety companion grounded in authoritative OISD, DGMS, and ACGIH protocols, providing immediate clinical triage, PPE fit guidance, and OHC referrals.
 
 ---
 
@@ -186,14 +188,14 @@ npm run dev
 4. Add environment variables:
    * `GROQ_API_KEY`: *(Optional, for RAG advisor chatbot)*
    * `PYTHON_VERSION`: `3.12.0`
-5. Click **Deploy**. Note your backend URL (e.g. `https://rakshak-api.onrender.com`).
+5. Click **Deploy**. Note your backend URL (e.g. `https://strela-api.onrender.com`).
 
 ### Deploying Frontend (Next.js on Vercel)
 1. Import your GitHub repository to [Vercel](https://vercel.com).
 2. Set the **Root Directory** to `frontend-next`.
 3. Add Environment Variables:
-   * `BACKEND_URL`: `https://your-backend-api.onrender.com`
-   * `NEXT_PUBLIC_API_URL`: `https://your-backend-api.onrender.com`
+   * `BACKEND_URL`: `https://strela-api.onrender.com`
+   * `NEXT_PUBLIC_API_URL`: `https://strela-api.onrender.com`
 4. Click **Deploy**. Your full-stack platform is live!
 
 ---
@@ -222,7 +224,7 @@ tests/test_vision_scanner.py::test_mlp_forward_pass PASSED
 
 ## 📜 Industrial Safety Standards Compliance
 
-Rakshak is built in strict adherence to Indian and international occupational health standards:
+STRELA and the Rakshak AI advisory engine are built in strict adherence to Indian and international occupational health standards:
 * **OISD-STD-105:** Work Permit System and Standard Incident Reporting in Petroleum Refineries.
 * **OISD-STD-155:** Personnel Protective Equipment (PPE) Guidelines.
 * **DGMS (Directorate General of Mines Safety):** Periodic Medical Examination (PME) protocols.

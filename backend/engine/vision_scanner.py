@@ -330,7 +330,7 @@ class VisionScanner:
             return {
                 "success": False,
                 "strip_detected": False,
-                "error": "❌ No valid Rakshak dosimeter strip detected. Please align the blue wristband or QR identifier within the camera guide.",
+                "error": "❌ No valid STRELA dosimeter strip detected. Please align the blue wristband or QR identifier within the camera guide.",
                 "qr_data": qr_info,
                 "blue_details": blue_details,
                 "quality_scorecard": quality,

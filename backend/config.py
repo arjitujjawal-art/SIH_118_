@@ -2,7 +2,7 @@ import os
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
-    PROJECT_NAME: str = "Rakshak (रक्षक) — H2S Exposure Advisory System"
+    PROJECT_NAME: str = "STRELA — H2S Exposure Advisory Platform"
     VERSION: str = "1.0.0"
     API_V1_STR: str = "/api"
     
