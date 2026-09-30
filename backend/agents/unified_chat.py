@@ -103,12 +103,22 @@ class UnifiedChatAgent:
             if any(char.isdigit() for char in message):
                 return self._handle_scan_submission(session, message, db, lang)
 
+        # 2b. Urgent Symptoms / Health Alert (High Priority - Routes immediately to LLM / Triage)
+        symptom_triggers = [
+            "dizzy", "dizziness", "sleepy", "drowsy", "fatigue", "faint", "fainting",
+            "headache", "eye sting", "burning eye", "choke", "cough", "vomit", "nausea",
+            "unconscious", "loss of smell", "smell lost",
+            "चक्कर", "नींद", "सुस्ती", "सिरदर्द", "जलन", "उल्टी", "बेहोश", "गंध चली", "खांसी"
+        ]
+        if any(s in msg_clean for s in symptom_triggers):
+            return self._handle_llm_safety_query(message, session, lang)
+
         # 3. Direct Exposure Status Query (e.g., "Summarize Sumedh Kulkarni's 7-day exposure.")
         if any(k in msg_clean for k in ["exposure status", "7-day exposure", "7 day exposure", "7-day", "7 day", "my exposure", "exposure ledger", "dose summary", "summarize exposure", "एक्सपोजर"]):
             return self._handle_exposure_query(session, db, lang)
 
         # 4. Everyday Tasks & Operational Shift Routines
-        if any(k in msg_clean for k in ["everyday task", "daily task", "everyday", "daily tasks", "tasks", "task", "checklist", "routine", "morning routine", "handover", "shift work", "what to do today", "schedule today", "inspection walk", "duty", "duties", "work routine", "shift duties", "today's work", "operator task", "patrol", "दिनचर्या", "दैनिक", "कार्य", "काम", "आज का काम"]):
+        if any(k in msg_clean for k in ["everyday task", "daily task", "everyday tasks", "daily tasks", "my task", "my tasks", "shift checklist", "checklist", "daily routine", "morning routine", "shift handover", "shift routine", "shift duties", "operational routine", "operational walk", "what to do today", "schedule today", "today's work", "patrol walk", "दैनिक दिनचर्या", "दैनिक कार्य", "दैनिक काम", "शिफ्ट कार्य", "आज का काम", "आज के कार्य", "सुबह की चेकलिस्ट"]):
             return self._handle_daily_tasks_query(session, db, lang)
 
         # 5. Confined Space Entry (CSE)
