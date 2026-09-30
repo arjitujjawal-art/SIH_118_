@@ -59,6 +59,7 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
+    allow_origin_regex=r"https?://.*",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -604,6 +605,8 @@ def list_employees(db: Session = Depends(get_db)):
 
 @app.get("/api/manager/employees/{employee_id}")
 @app.get("/api/control-room/workers/{employee_id}")
+@app.get("/api/workers/{employee_id}")
+@app.get("/api/employees/{employee_id}")
 def get_employee_insights(employee_id: str, db: Session = Depends(get_db)):
     """Detailed employee dossier, full shift history, 90-day trajectory."""
     emp = db.query(EmployeeModel).filter(EmployeeModel.worker_id == employee_id).first()

@@ -56,21 +56,13 @@ export default function WorkerProfilePage() {
     try {
       setLoading(true);
       setErrorMsg(null);
-      const [profileData, lungData] = await Promise.allSettled([
-        getWorkerProfile(workerId),
-        fetch(`/api/workers/${workerId}/lung-risk`).then((r) => r.ok ? r.json() : null),
-      ]);
-
-      if (profileData.status === "fulfilled") {
-        const data = profileData.value;
-        setProfile(data.worker_profile || data.employee_profile);
-        setScans(data.shift_history || data.recent_scans || []);
-      } else {
-        throw profileData.reason;
-      }
-
-      if (lungData.status === "fulfilled" && lungData.value) {
-        setLungRisk(lungData.value);
+      const profileRes = await getWorkerProfile(workerId);
+      if (profileRes) {
+        setProfile(profileRes.worker_profile || profileRes.employee_profile);
+        setScans(profileRes.shift_history || profileRes.recent_scans || []);
+        if (profileRes.lung_risk_profile || profileRes.chronic_lung_risk) {
+          setLungRisk(profileRes.lung_risk_profile || profileRes.chronic_lung_risk);
+        }
       }
     } catch (err: any) {
       console.warn("Worker profile load error", err);
