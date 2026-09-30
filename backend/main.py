@@ -722,6 +722,7 @@ def get_worker_lung_risk(worker_id: Optional[str] = None, employee_id: Optional[
     return calculate_chronic_lung_risk_score(worker_profile)
 
 @app.get("/api/health")
+@app.get("/health")
 def health_check():
     return {
         "status": "healthy",
