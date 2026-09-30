@@ -577,9 +577,9 @@ export default function WorkerProfilePage() {
                   </span>
                 </div>
 
-                <div className="overflow-x-auto">
+                <div className="overflow-x-auto max-h-[560px] overflow-y-auto rounded-xl border border-light-surface/60">
                   <table className="w-full text-left border-collapse">
-                    <thead>
+                    <thead className="sticky top-0 bg-warm-white z-10">
                       <tr className="bg-warm-white border-b border-light-surface text-[10px] font-mono font-bold uppercase text-charcoal">
                         <th className="p-3 pl-4">Scan ID & Time</th>
                         <th className="p-3">Unit</th>

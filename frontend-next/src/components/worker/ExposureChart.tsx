@@ -43,39 +43,138 @@ export default function ExposureChart({ scans }: ExposureChartProps) {
     );
   }
 
-  // Format data for Recharts
-  const chartData = scans
-    .slice()
-    .reverse()
-    .map((scan, idx) => {
-      const metrics = (scan.computed_metrics || {}) as any;
-      const doseLow = typeof metrics.dose_low === "number" ? metrics.dose_low : 0;
-      const doseHigh = typeof metrics.dose_high === "number" ? metrics.dose_high : doseLow;
-      const doseNominal = (doseLow + doseHigh) / 2;
-      const twa = typeof metrics.shift_twa_ppm === "number" ? metrics.shift_twa_ppm : (metrics.twa_low ?? 0);
-      const deltaE = scan.badge_data?.net_delta_e ?? (scan.badge_data?.delta_e ?? 0);
-      const dateStr = scan.timestamp ? new Date(scan.timestamp).toLocaleDateString("en-US", { month: "short", day: "numeric" }) : `Shift ${idx + 1}`;
-      const hazardScore = typeof metrics.hazard_score_5pt === "number"
-        ? metrics.hazard_score_5pt
-        : Math.min(5.0, Math.max(0.0, parseFloat((doseHigh / 4.0).toFixed(1))));
-      const simpleLevel = metrics.hazard_level_simple || (
-        hazardScore <= 1.5 ? "SAFE" : hazardScore <= 3.4 ? "CAUTION" : "CRITICAL"
-      );
+  // Helper to parse individual scan record
+  const parseScan = (scan: ShiftScanRecord) => {
+    const metrics = (scan.computed_metrics || {}) as any;
+    const doseLow = typeof metrics.dose_low === "number" ? metrics.dose_low : 0;
+    const doseHigh = typeof metrics.dose_high === "number" ? metrics.dose_high : doseLow;
+    const doseNominal = typeof metrics.compensated_dose_ppm_hr === "number"
+      ? metrics.compensated_dose_ppm_hr
+      : (doseLow + doseHigh) / 2;
+    const twa = typeof metrics.shift_twa_ppm === "number" ? metrics.shift_twa_ppm : (metrics.twa_low ?? 0);
+    const deltaE = scan.badge_data?.net_delta_e ?? (scan.badge_data?.delta_e ?? 0);
+    const hazardScore = typeof metrics.hazard_score_5pt === "number"
+      ? metrics.hazard_score_5pt
+      : Math.min(5.0, Math.max(0.0, parseFloat((doseHigh / 4.0).toFixed(1))));
+    const simpleLevel = metrics.hazard_level_simple || (
+      hazardScore <= 1.5 ? "SAFE" : hazardScore <= 3.4 ? "CAUTION" : "CRITICAL"
+    );
+    const dateObj = scan.timestamp ? new Date(scan.timestamp) : new Date();
 
-      return {
-        name: dateStr,
-        fullDate: scan.timestamp ? new Date(scan.timestamp).toLocaleString() : `Shift ${idx + 1}`,
-        doseNominal: parseFloat(doseNominal.toFixed(2)),
-        doseLow: parseFloat(doseLow.toFixed(1)),
-        doseHigh: parseFloat(doseHigh.toFixed(1)),
-        twa: parseFloat(twa.toFixed(2)),
-        deltaE: parseFloat(deltaE.toFixed(2)),
-        hazardScore: parseFloat(hazardScore.toFixed(1)),
-        simpleLevel: simpleLevel,
-        tier: metrics.statutory_tier || "TIER 1 (NORMAL)",
-        unit: scan.plant_unit || "CDU-1",
-      };
+    return {
+      date: dateObj,
+      doseNominal,
+      doseLow,
+      doseHigh,
+      twa,
+      deltaE,
+      hazardScore,
+      simpleLevel,
+      tier: metrics.statutory_tier || "TIER 1 (NORMAL)",
+      unit: scan.plant_unit || "CDU-1",
+      scanId: scan.scan_id,
+    };
+  };
+
+  const parsedScans = scans.map(parseScan).sort((a, b) => a.date.getTime() - b.date.getTime());
+
+  // Format data for Recharts according to active timeframe
+  let chartData: any[] = [];
+
+  if (timeframe === "daily") {
+    // Group by distinct calendar day (YYYY-MM-DD)
+    const dayMap = new Map<string, typeof parsedScans[0]>();
+    parsedScans.forEach((item) => {
+      const key = item.date.toISOString().split("T")[0];
+      // Keep representative reading with highest exposure for that day
+      if (!dayMap.has(key) || item.doseNominal > (dayMap.get(key)?.doseNominal || 0)) {
+        dayMap.set(key, item);
+      }
     });
+
+    const days = Array.from(dayMap.entries())
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .slice(-14);
+
+    chartData = days.map(([key, item]) => ({
+      name: item.date.toLocaleDateString("en-US", { month: "short", day: "numeric" }),
+      fullDate: item.date.toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }),
+      doseNominal: parseFloat(item.doseNominal.toFixed(2)),
+      doseLow: parseFloat(item.doseLow.toFixed(1)),
+      doseHigh: parseFloat(item.doseHigh.toFixed(1)),
+      twa: parseFloat(item.twa.toFixed(2)),
+      deltaE: parseFloat(item.deltaE.toFixed(2)),
+      hazardScore: parseFloat(item.hazardScore.toFixed(1)),
+      simpleLevel: item.simpleLevel,
+      tier: item.tier,
+      unit: item.unit,
+    }));
+  } else if (timeframe === "weekly") {
+    const weekMap = new Map<string, { totalDose: number; maxTwa: number; count: number; date: Date; unit: string }>();
+    parsedScans.forEach((item) => {
+      const d = new Date(item.date);
+      d.setHours(0, 0, 0, 0);
+      const startOfWeek = new Date(d);
+      startOfWeek.setDate(d.getDate() - d.getDay());
+      const key = startOfWeek.toISOString().split("T")[0];
+
+      const existing = weekMap.get(key) || { totalDose: 0, maxTwa: 0, count: 0, date: startOfWeek, unit: item.unit };
+      existing.totalDose += item.doseNominal;
+      existing.maxTwa = Math.max(existing.maxTwa, item.twa);
+      existing.count += 1;
+      weekMap.set(key, existing);
+    });
+
+    chartData = Array.from(weekMap.entries())
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .slice(-8)
+      .map(([key, item]) => {
+        const score = Math.min(5.0, parseFloat((item.totalDose / 10.0).toFixed(1)));
+        return {
+          name: `Wk of ${item.date.toLocaleDateString("en-US", { month: "short", day: "numeric" })}`,
+          fullDate: `Week starting ${item.date.toLocaleDateString("en-US", { month: "short", day: "numeric" })} (${item.count} shifts)`,
+          doseNominal: parseFloat(item.totalDose.toFixed(2)),
+          doseLow: parseFloat((item.totalDose * 0.88).toFixed(1)),
+          doseHigh: parseFloat((item.totalDose * 1.12).toFixed(1)),
+          twa: parseFloat(item.maxTwa.toFixed(2)),
+          deltaE: parseFloat((item.totalDose * 0.45).toFixed(2)),
+          hazardScore: score,
+          simpleLevel: score > 3.4 ? "CRITICAL" : score > 1.5 ? "CAUTION" : "SAFE",
+          tier: score > 3.4 ? "TIER 3 (CRITICAL)" : score > 1.5 ? "TIER 2 (CAUTION)" : "TIER 1 (NORMAL)",
+          unit: item.unit,
+        };
+      });
+  } else {
+    // Monthly aggregation
+    const monthMap = new Map<string, { totalDose: number; maxTwa: number; count: number; date: Date; unit: string }>();
+    parsedScans.forEach((item) => {
+      const key = `${item.date.getFullYear()}-${item.date.getMonth() + 1}`;
+      const existing = monthMap.get(key) || { totalDose: 0, maxTwa: 0, count: 0, date: item.date, unit: item.unit };
+      existing.totalDose += item.doseNominal;
+      existing.maxTwa = Math.max(existing.maxTwa, item.twa);
+      existing.count += 1;
+      monthMap.set(key, existing);
+    });
+
+    chartData = Array.from(monthMap.entries())
+      .sort((a, b) => a[0].localeCompare(b[0]))
+      .map(([key, item]) => {
+        const score = Math.min(5.0, parseFloat((item.totalDose / 25.0).toFixed(1)));
+        return {
+          name: item.date.toLocaleDateString("en-US", { month: "short", year: "2-digit" }),
+          fullDate: `${item.date.toLocaleDateString("en-US", { month: "long", year: "numeric" })} (${item.count} shifts)`,
+          doseNominal: parseFloat(item.totalDose.toFixed(2)),
+          doseLow: parseFloat((item.totalDose * 0.88).toFixed(1)),
+          doseHigh: parseFloat((item.totalDose * 1.12).toFixed(1)),
+          twa: parseFloat(item.maxTwa.toFixed(2)),
+          deltaE: parseFloat((item.totalDose * 0.4).toFixed(2)),
+          hazardScore: score,
+          simpleLevel: score > 3.4 ? "CRITICAL" : score > 1.5 ? "CAUTION" : "SAFE",
+          tier: score > 3.4 ? "TIER 3 (CRITICAL)" : score > 1.5 ? "TIER 2 (CAUTION)" : "TIER 1 (NORMAL)",
+          unit: item.unit,
+        };
+      });
+  }
 
   const CustomTooltip = ({ active, payload, label }: any) => {
     if (active && payload && payload.length) {

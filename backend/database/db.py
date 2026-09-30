@@ -38,11 +38,83 @@ def get_db():
 
 def seed_default_data(db):
     from backend.database.models import EmployeeModel, ExposureLedgerModel, ShiftScanModel, IncidentReportModel
-    
-    if db.query(EmployeeModel).count() > 0:
+
+    # 1. First priority: Load rich historical workforce & dosimetry dataset from seed_data.json
+    seed_json_path = os.path.join(os.path.dirname(__file__), "seed_data.json")
+    if os.path.exists(seed_json_path):
+        try:
+            with open(seed_json_path, "r", encoding="utf-8") as f:
+                seed_data = json.load(f)
+
+            # A. Populate Employees if missing
+            if db.query(EmployeeModel).count() == 0:
+                print("🌱 Populating refinery workforce from seed_data.json...")
+                for w in seed_data.get("workers", []):
+                    w_dict = {k: v for k, v in w.items() if k not in ["created_at", "updated_at"]}
+                    emp = EmployeeModel(**w_dict)
+                    db.add(emp)
+                db.commit()
+
+            # B. Populate Exposure Ledgers if missing
+            if db.query(ExposureLedgerModel).count() == 0:
+                for l in seed_data.get("exposure_ledgers", []):
+                    l_dict = {k: v for k, v in l.items() if k not in ["id", "last_updated"]}
+                    ledger = ExposureLedgerModel(**l_dict)
+                    db.add(ledger)
+                db.commit()
+
+            # C. Backfill all shift scans if missing or partial
+            existing_scan_ids = set(r[0] for r in db.query(ShiftScanModel.scan_id).all())
+            scans_to_add = []
+            for s in seed_data.get("shift_scans", []):
+                if s["scan_id"] not in existing_scan_ids:
+                    s_dict = dict(s)
+                    if isinstance(s_dict.get("timestamp"), str):
+                        try:
+                            s_dict["timestamp"] = datetime.fromisoformat(s_dict["timestamp"])
+                        except Exception:
+                            s_dict["timestamp"] = datetime.now(timezone.utc)
+                    scan_obj = ShiftScanModel(**s_dict)
+                    scans_to_add.append(scan_obj)
+
+            if scans_to_add:
+                db.bulk_save_objects(scans_to_add)
+                db.commit()
+                print(f"✅ Loaded {len(scans_to_add)} historical shift scans from seed_data.json")
+
+            # D. Backfill incident reports if missing
+            existing_incident_ids = set(r[0] for r in db.query(IncidentReportModel.incident_id).all())
+            incidents_to_add = []
+            for inc in seed_data.get("incident_reports", []):
+                if inc["incident_id"] not in existing_incident_ids:
+                    inc_dict = dict(inc)
+                    if isinstance(inc_dict.get("timestamp"), str):
+                        try:
+                            inc_dict["timestamp"] = datetime.fromisoformat(inc_dict["timestamp"])
+                        except Exception:
+                            inc_dict["timestamp"] = datetime.now(timezone.utc)
+                    if isinstance(inc_dict.get("created_at"), str):
+                        try:
+                            inc_dict["created_at"] = datetime.fromisoformat(inc_dict["created_at"])
+                        except Exception:
+                            inc_dict["created_at"] = datetime.now(timezone.utc)
+                    inc_obj = IncidentReportModel(**inc_dict)
+                    incidents_to_add.append(inc_obj)
+
+            if incidents_to_add:
+                db.bulk_save_objects(incidents_to_add)
+                db.commit()
+                print(f"✅ Loaded {len(incidents_to_add)} incident reports from seed_data.json")
+
+            if db.query(ShiftScanModel).count() > 0:
+                return
+        except Exception as e:
+            print(f"⚠️ Error loading seed_data.json: {e}")
+
+    if db.query(EmployeeModel).count() > 0 and db.query(ShiftScanModel).count() >= 7:
         return  # Already seeded
 
-    print("🌱 Seeding initial refinery workforce and shift history...")
+    print("🌱 Seeding initial refinery workforce and shift history (procedural fallback)...")
     now = datetime.now(timezone.utc)
 
     employees_data = [
@@ -174,65 +246,78 @@ def seed_default_data(db):
 
     for data in employees_data:
         ledger_data = data.pop("ledger")
-        emp = EmployeeModel(**data)
-        db.add(emp)
-        db.commit()
-        db.refresh(emp)
+        emp = db.query(EmployeeModel).filter(EmployeeModel.worker_id == data["worker_id"]).first()
+        if not emp:
+            emp = EmployeeModel(**data)
+            db.add(emp)
+            db.commit()
+            db.refresh(emp)
 
-        ledger = ExposureLedgerModel(
-            worker_id=emp.worker_id,
-            **ledger_data
-        )
-        db.add(ledger)
+        ledger = db.query(ExposureLedgerModel).filter(ExposureLedgerModel.worker_id == emp.worker_id).first()
+        if not ledger:
+            ledger = ExposureLedgerModel(
+                worker_id=emp.worker_id,
+                **ledger_data
+            )
+            db.add(ledger)
+            db.commit()
+
+        # Seed 7-day continuous shifts for each employee
+        daily_doses = [1.1, 0.9, 1.4, 1.2, 0.8, 1.0, 1.0] if emp.worker_id == "EMP-1042" else [1.5, 2.0, 2.5, 2.8, 2.5, 2.7, 2.8]
+        for day_offset in range(7):
+            days_ago = 6 - day_offset
+            shift_time = now - timedelta(days=days_ago, hours=4)
+            scan_id = f"SCN-{emp.worker_id}-D{day_offset + 1}"
+            if db.query(ShiftScanModel).filter(ShiftScanModel.scan_id == scan_id).first():
+                continue
+
+            dose = daily_doses[day_offset] if day_offset < len(daily_doses) else 1.0
+            scan = ShiftScanModel(
+                scan_id=scan_id,
+                worker_id=emp.worker_id,
+                plant_unit=emp.plant_unit,
+                timestamp=shift_time,
+                shift_status="COMPLETED",
+                shift_duration_hours=8.0,
+                badge_id=emp.active_badge_id,
+                start_delta_e=0.2 * day_offset,
+                end_delta_e=0.2 * day_offset + dose * 0.5,
+                net_delta_e=dose * 0.5,
+                delta_e=dose * 0.5,
+                patch_b_drift=0.02 * day_offset,
+                patch_c_condition="NORMAL",
+                shelf_life_status="VALID",
+                raw_optical_dose=dose,
+                temperature_c=28.5 + (day_offset % 3),
+                relative_humidity_pct=70.0 - (day_offset % 5),
+                k_factor=1.0,
+                telemetry_source="Open-Meteo",
+                dose_low=round(dose * 0.88, 2),
+                dose_high=round(dose * 1.12, 2),
+                twa_low=round(dose * 0.88 / 8.0, 2),
+                twa_high=round(dose * 1.12 / 8.0, 2),
+                compensated_dose_ppm_hr=dose,
+                shift_twa_ppm=round(dose / 8.0, 2),
+                updated_7day_load=ledger_data["rolling_7day_ppm_hr"],
+                statutory_tier="TIER 1 (NORMAL)" if dose < 3.0 else "TIER 2 (CAUTION)",
+                measurement_confidence="HIGH",
+                is_single_shift_critical=False,
+                advisory_json=json.dumps({
+                    "summary_banner": "Shift exposure within normal limits. Safe baseline maintained.",
+                    "triage_question": "Are you feeling any slight eye dryness or throat tickle?",
+                    "recommendations": [
+                        {
+                            "priority_level": "[LOW / SELF-CARE]",
+                            "category": "Self-Care & Hygiene",
+                            "action_item": "Wash face and exposed skin with clean water. Rest for 15 minutes and hydrate."
+                        }
+                    ]
+                })
+            )
+            db.add(scan)
         db.commit()
 
-        # Seed sample completed shift scan
-        scan = ShiftScanModel(
-            scan_id=f"SCN-{emp.worker_id}-01",
-            worker_id=emp.worker_id,
-            plant_unit=emp.plant_unit,
-            timestamp=now - timedelta(hours=4),
-            shift_status="COMPLETED",
-            shift_duration_hours=8.0,
-            badge_id=emp.active_badge_id,
-            start_delta_e=0.4,
-            end_delta_e=3.6,
-            net_delta_e=3.1,
-            delta_e=3.1,
-            patch_b_drift=0.1,
-            patch_c_condition="NORMAL",
-            shelf_life_status="VALID",
-            raw_optical_dose=6.8,
-            temperature_c=28.5,
-            relative_humidity_pct=72.0,
-            k_factor=1.0,
-            telemetry_source="Open-Meteo",
-            dose_low=6.2,
-            dose_high=7.8,
-            twa_low=0.78,
-            twa_high=0.98,
-            compensated_dose_ppm_hr=7.0,
-            shift_twa_ppm=0.88,
-            updated_7day_load=ledger_data["rolling_7day_ppm_hr"],
-            statutory_tier="TIER 1 (NORMAL)" if ledger_data["rolling_7day_ppm_hr"] < 15.0 else "TIER 2 (CAUTION)",
-            measurement_confidence="HIGH",
-            is_single_shift_critical=False,
-            advisory_json=json.dumps({
-                "summary_banner": "Shift exposure within normal limits. Safe baseline maintained.",
-                "triage_question": "Are you feeling any slight eye dryness or throat tickle?",
-                "recommendations": [
-                    {
-                        "priority_level": "[LOW / SELF-CARE]",
-                        "category": "Self-Care & Hygiene",
-                        "action_item": "Wash face and exposed skin with clean water. Rest for 15 minutes and hydrate."
-                    }
-                ]
-            })
-        )
-        db.add(scan)
-        db.commit()
-
-    print("✅ Seeded 4 refinery employees with ledgers and shift scans.")
+    print("✅ Seeded refinery employees with 7-day longitudinal shift scans.")
 
 def init_db():
     from backend.database import models  # noqa
