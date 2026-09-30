@@ -2,10 +2,10 @@ import { UserPlus, Plus } from "lucide-react";
 
 export default function TeamSection() {
   const teamPlaceholders = [
-    { role: "Project Lead & Hardware Designer", note: "Wristband SbCl₃ cartridge architecture & formulation" },
+    { role: "Project Lead & Web Designer", note: "Wristband SbCl₃ cartridge architecture & formulation" },
     { role: "Full-Stack Software Engineer", note: "FastAPI dosimetry engine & Next.js platform" },
     { role: "Optical Vision & ML Specialist", note: "CIELAB segmentation & 3-layer neural network model" },
-    { role: "Industrial Hygiene & Safety Advisor", note: "OISD compliance & statutory risk tiering" },
+    { role: "Hardware designer and Chem specialist", note: "OISD compliance & statutory risk tiering" },
   ];
 
   return (
