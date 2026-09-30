@@ -1,7 +1,7 @@
 import PublicNavbar from "@/components/layout/PublicNavbar";
 import Footer from "@/components/layout/Footer";
 import Hero from "@/components/public/Hero";
-import ProjectDescription from "@/components/public/ProjectDescription";
+import HomeExplodedSection from "@/components/public/HomeExplodedSection";
 import PlatformAccess from "@/components/public/PlatformAccess";
 import TeamSection from "@/components/public/TeamSection";
 import FinalCTA from "@/components/public/FinalCTA";
@@ -11,9 +11,9 @@ export default function HomePage() {
     <>
       <PublicNavbar />
       <main className="flex-1">
-        {/* Order: Hero -> Project Description -> Platform Access -> Team -> Final CTA */}
+        {/* Order: Hero -> Interactive 3D Exploded Teardown & Integrated Workflow -> Platform Access -> Team -> Final CTA */}
         <Hero />
-        <ProjectDescription />
+        <HomeExplodedSection />
         <PlatformAccess />
         <TeamSection />
         <FinalCTA />
