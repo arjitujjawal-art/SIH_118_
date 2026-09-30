@@ -48,15 +48,6 @@ export default function PublicNavbar() {
           >
             Pipeline
           </Link>
-          <Link
-            href="/prototype-3d"
-            className={`text-sm font-medium transition-colors flex items-center gap-1.5 ${
-              pathname === "/prototype-3d" ? "text-yellow-golden font-bold" : "text-charcoal hover:text-yellow-golden font-semibold"
-            }`}
-          >
-            <span className="w-2 h-2 rounded-full bg-yellow-golden animate-pulse" />
-            <span>3D Exploded View</span>
-          </Link>
           <a
             href="/#team"
             className="text-sm font-medium text-sage-muted hover:text-charcoal transition-colors"
