@@ -40,100 +40,120 @@ const MILESTONES: ComponentMilestone[] = [
     stageName: "STAGE 01 · ASSEMBLED STATE",
     layerTitle: "STRELA Passive Dosimeter Device",
     layerTag: "Assembled Hardware",
-    scrollRange: [0.0, 0.22],
+    scrollRange: [0.0, 0.18],
     depthMm: "0.0 mm (Locked)",
-    description: "Zero-power wearable colorimetric chemical dosimeter engineered for refinery personnel monitoring in extreme hazardous zones (Zone 0/1 H₂S environments).",
+    description: "Zero-power wearable colorimetric chemical dosimeter engineered with lead-free organic plant chemistry for refinery personnel safety monitoring.",
     highlights: [
-      "Zero battery / intrinsically safe",
-      "Continuous irreversible optical exposure accumulation",
-      "5-day operational shift rotation rating"
+      "100% passive zero-battery wearable wristband",
+      "Integrated 5-component optical and chemical architecture",
+      "Safe non-toxic organic formulation"
     ],
     specs: [
-      { label: "Dimensions", value: "120 × 50 × 4.2 mm" },
-      { label: "Total Weight", value: "28.5 grams" },
-      { label: "Enclosure Rating", value: "IP67 Washdown" },
+      { label: "Power", value: "0.00 W (Passive)" },
+      { label: "Formulation", value: "Lead-Free Bio-Anthocyanin" },
+      { label: "Wear Period", value: "7-Day Rotation" },
     ],
     pinPosition: { x: 50, y: 48 },
   },
   {
     id: "shield",
-    stageName: "STAGE 02 · OPTICAL DISASSEMBLY",
-    layerTitle: "Layer 01: Anti-UV Polycarbonate Shield",
-    layerTag: "Front Protection",
-    scrollRange: [0.22, 0.42],
+    stageName: "STAGE 02 · POROUS PROTECTIVE LAYER",
+    layerTitle: "Layer 01: Porous Protective Layer",
+    layerTag: "Porous Gas Shield",
+    scrollRange: [0.18, 0.35],
     depthMm: "+4.8 mm (Forward)",
-    description: "Ultra-clear anti-reflective polycarbonate crystal with embedded 380nm UV cutoff filter, preventing solar photo-bleaching and mechanical abrasion during rugged field use.",
+    description: "It's a porous layer which prevents the internal sensing layer from the temperature and humidity of the surroundings, and also lets the airborne H₂S gas pass through for the reaction to occur.",
     highlights: [
-      "94% optical transmission at 540nm green wavelength",
-      "Oleophobic scratch-resistant nano-coating",
-      "Gas-permeable peripheral breathing vents"
+      "Prevents temperature and humidity interference from surroundings",
+      "Porous structure allows H₂S gas through for reaction to occur",
+      "Protects active chemistry from physical contamination"
     ],
     specs: [
-      { label: "Material", value: "Optical Polycarbonate" },
-      { label: "UV Cutoff", value: "< 380 nm Block" },
-      { label: "Refractive Index", value: "1.58 IOR" },
+      { label: "Function", value: "Temp & Humidity Barrier" },
+      { label: "Gas Flow", value: "Porous H₂S Diffusion" },
+      { label: "Protection", value: "Environmental Shield" },
     ],
     pinPosition: { x: 42, y: 36 },
   },
   {
     id: "faceplate",
-    stageName: "STAGE 03 · CALIBRATION INTERFACE",
-    layerTitle: "Layer 02: Precision Calibration Faceplate",
-    layerTag: "Optical Benchmark",
-    scrollRange: [0.42, 0.62],
-    depthMm: "+3.2 mm (Forward)",
-    description: "High-contrast matte white ceramic faceplate with laser-etched perimeter stitching, worker identity QR code matrix, and the 6-stage colorimetric reference scale.",
+    stageName: "STAGE 03 · EMPLOYEE QR CODE",
+    layerTitle: "Layer 02: Employee QR Code Matrix",
+    layerTag: "Employee Tracking",
+    scrollRange: [0.35, 0.52],
+    depthMm: "+3.6 mm (Forward)",
+    description: "The QR code has the details of the employees, automatically connecting the physical wristband to the worker's shift records and digital exposure ledger upon scanning.",
     highlights: [
-      "Standardized CIELAB reflectance benchmark",
-      "Individual worker cryptographic ID embedding",
-      "0 to 120 ppm·min visual reference comparator pads"
+      "Contains the full profile details of the employee",
+      "Instant optical capture at shift check-in and check-out",
+      "Eliminates manual paper logs with automatic cloud tracking"
     ],
     specs: [
-      { label: "Reflectance Standard", value: "D65 CIE White" },
-      { label: "QR Contrast", value: "> 92% Modulation" },
-      { label: "Comparator Scale", value: "0, 10, 30, 60, 90, 120" },
+      { label: "Data Contents", value: "Employee Profile & ID" },
+      { label: "Scan Method", value: "Smartphone Camera" },
+      { label: "Ledger Sync", value: "Instant Cloud Tracking" },
     ],
-    pinPosition: { x: 56, y: 52 },
+    pinPosition: { x: 26, y: 36 },
   },
   {
-    id: "sensing",
-    stageName: "STAGE 04 · CHEMICAL SENSING CORE",
-    layerTitle: "Layer 03 & 04: SbCl₃/Anthocyanin Sensor & PTFE Filter",
-    layerTag: "Detection Core",
-    scrollRange: [0.62, 0.82],
-    depthMm: "+1.8 mm / +0.8 mm",
-    description: "The core reactive chemistry layer: antimony trichloride & natural red cabbage anthocyanin immobilized on acidic cellulose with microporous PTFE diffusion membrane.",
+    id: "expiry",
+    stageName: "STAGE 04 · EXPIRY PATCH",
+    layerTitle: "Layer 03: 7-Day Expiry Patch",
+    layerTag: "Bio-Freshness Control",
+    scrollRange: [0.52, 0.68],
+    depthMm: "+2.4 mm (Forward)",
+    description: "The expiry patch is made of purple cabbage extract which fades colour after a time period of 7 days, acting as a built-in freshness indicator to ensure active reliability.",
     highlights: [
-      "Distinctive purple-to-yellow colorimetric transition",
-      "Pristine control reference patch (Expiry control)",
-      "Arrhenius temperature & humidity compensated"
+      "Made of natural purple cabbage extract",
+      "Fades colour after a time period of 7 days",
+      "Ensures expired bands are automatically flagged and replaced"
     ],
     specs: [
-      { label: "Active Reagent", value: "SbCl₃ + Anthocyanin" },
-      { label: "Detection Range", value: "0.1 to 50 ppm" },
-      { label: "Diffusion Membrane", value: "0.2 μm Porous PTFE" },
+      { label: "Composition", value: "Purple Cabbage Extract" },
+      { label: "Time Window", value: "7-Day Color Fade" },
+      { label: "Safety Goal", value: "Freshness Verification" },
     ],
-    pinPosition: { x: 62, y: 44 },
+    pinPosition: { x: 44, y: 36 },
   },
   {
-    id: "chassis",
-    stageName: "STAGE 05 · REAR CHASSIS & ANCHORS",
-    layerTitle: "Layer 05 & 06: Structural TPU Chassis & Silicone Base",
-    layerTag: "Chassis & Straps",
-    scrollRange: [0.82, 1.0],
-    depthMm: "-2.4 mm / -4.5 mm (Aft)",
-    description: "Impact-resistant thermoplastic polyurethane housing with ergonomic hypoallergenic silicone skin-contact backing and reinforced high-tensile elastic woven wristband straps.",
+    id: "reactive",
+    stageName: "STAGE 05 · CHEMICAL SENSING STRIP",
+    layerTitle: "Layer 04: Reactive Chemical Strip",
+    layerTag: "Active H₂S Sensor",
+    scrollRange: [0.68, 0.85],
+    depthMm: "+1.2 mm (Center)",
+    description: "The chemical strip is made of anthocyanin and SbCl₃ which shows an irreversible colour change when reacted with H₂S, permanently capturing exposure without any electronics.",
     highlights: [
-      "Sweat-resistant ergonomic contoured backing",
-      "Interchangeable snap-fit cartridge bay",
-      "High-tensile anti-microbial elastic strap"
+      "Made of pure anthocyanin and SbCl₃ formulation",
+      "Shows an irreversible colour change when reacted with H₂S",
+      "Zero-power chemical accumulation of airborne gas"
     ],
     specs: [
-      { label: "Housing Material", value: "Medical TPU Shore 85A" },
-      { label: "Skin Contact", value: "ISO 10993 Biocompatible" },
-      { label: "Strap Tensile", value: "> 350 N Breaking Force" },
+      { label: "Active Chemistry", value: "Anthocyanin + SbCl₃" },
+      { label: "Color Response", value: "Irreversible Shift" },
+      { label: "Target Gas", value: "Hydrogen Sulfide (H₂S)" },
     ],
-    pinPosition: { x: 35, y: 64 },
+    pinPosition: { x: 68, y: 36 },
+  },
+  {
+    id: "comparator",
+    stageName: "STAGE 06 · REFERENCE SCALE",
+    layerTitle: "Layer 05: Multi-Step Reference Scale",
+    layerTag: "Lighting Calibration",
+    scrollRange: [0.85, 1.0],
+    depthMm: "0.0 mm (Baseline)",
+    description: "The reference scale is used to compare the colour change at bad lighting conditions so it will be easy for the model to compare the colour change made by H₂S and the reference scale to detect the appropriate exposure.",
+    highlights: [
+      "Used to compare colour change at bad lighting conditions",
+      "Enables model to compare H₂S change against standard scale",
+      "Detects the exact appropriate exposure under any lighting"
+    ],
+    specs: [
+      { label: "Scale Standard", value: "0 to 120 Visual Swatches" },
+      { label: "Lighting Role", value: "Low-Light Compensation" },
+      { label: "AI Reading", value: "Appropriate Exposure LOD" },
+    ],
+    pinPosition: { x: 50, y: 64 },
   },
 ];
 
@@ -142,7 +162,7 @@ export default function HomeExplodedSection() {
   const [scrollProgress, setScrollProgress] = useState(0);
   const [activeLayer, setActiveLayer] = useState<string | null>(null);
 
-  // Monitor native scroll position within the 400vh pinned track
+  // Monitor native scroll position within the 450vh pinned track
   useEffect(() => {
     const handleScroll = () => {
       if (!containerRef.current) return;
@@ -169,19 +189,19 @@ export default function HomeExplodedSection() {
       (m) => scrollProgress >= m.scrollRange[0] && scrollProgress <= m.scrollRange[1]
     ) || MILESTONES[0];
 
-  // Animation Choreography Interpolations:
-  // 1. Initial State (0.0 to 0.12): Photo on the left, Header text on the right
-  // 2. Center Animation (0.05 to 0.18): Photo glides to the center
-  // 3. 2D to 3D Handoff (0.12 to 0.22): 2D photo fades out smoothly as 3D Canvas activates
+  // Animation Choreography:
+  // 1. Initial State (0.0 to 0.12): Photo on left, text on right
+  // 2. Center Animation (0.05 to 0.16): Photo glides to center
+  // 3. 2D to 3D Handoff (0.10 to 0.18): 2D photo fades out smoothly as 3D Canvas activates
   const photoToCenterProgress = Math.max(0, Math.min(1, scrollProgress / 0.16));
   const initialHeaderOpacity = Math.max(0, 1 - scrollProgress / 0.14);
   const initialHeaderTransformY = scrollProgress * 80;
 
   // 2D image crossfade opacity
-  const imageOpacity = Math.max(0, Math.min(1, 1 - (scrollProgress - 0.08) / 0.12));
+  const imageOpacity = Math.max(0, Math.min(1, 1 - (scrollProgress - 0.08) / 0.10));
 
   // Pinned Exploded Dashboard Opacity
-  const explodedUiOpacity = Math.max(0, Math.min(1, (scrollProgress - 0.15) / 0.1));
+  const explodedUiOpacity = Math.max(0, Math.min(1, (scrollProgress - 0.14) / 0.08));
 
   // Smooth scroll to specific progress
   const scrollToProgress = (targetProgress: number) => {
@@ -304,7 +324,7 @@ export default function HomeExplodedSection() {
         )}
 
         {/* ======================================================== */}
-        {/* 3. LIGHT THEME 3D EXPLODED DASHBOARD OVERLAYS (0.18+)    */}
+        {/* 3. LIGHT THEME 3D EXPLODED DASHBOARD OVERLAYS (0.14+)    */}
         {/* ======================================================== */}
         {scrollProgress > 0.12 && (
           <div
@@ -323,12 +343,12 @@ export default function HomeExplodedSection() {
                 </span>
               </div>
 
-              {/* Layer Stepper Pills */}
-              <div className="flex items-center gap-1.5 bg-white/90 backdrop-blur-xl p-1.5 rounded-full border border-light-surface shadow-md overflow-x-auto max-w-full">
+              {/* Layer Stepper Pills (Matching exact 5 layers) */}
+              <div className="flex items-center gap-1 bg-white/90 backdrop-blur-xl p-1.5 rounded-full border border-light-surface shadow-md overflow-x-auto max-w-full">
                 <button
                   onClick={() => scrollToProgress(0.0)}
                   className={`px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all ${
-                    scrollProgress < 0.22
+                    scrollProgress < 0.18
                       ? "bg-charcoal text-white shadow-sm"
                       : "text-sage-muted hover:text-charcoal"
                   }`}
@@ -336,44 +356,54 @@ export default function HomeExplodedSection() {
                   Assembled
                 </button>
                 <button
-                  onClick={() => scrollToProgress(0.32)}
+                  onClick={() => scrollToProgress(0.26)}
                   className={`px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all ${
-                    scrollProgress >= 0.22 && scrollProgress < 0.42
+                    scrollProgress >= 0.18 && scrollProgress < 0.35
                       ? "bg-charcoal text-white shadow-sm"
                       : "text-sage-muted hover:text-charcoal"
                   }`}
                 >
-                  01 Shield
+                  01 Porous Layer
                 </button>
                 <button
-                  onClick={() => scrollToProgress(0.52)}
+                  onClick={() => scrollToProgress(0.43)}
                   className={`px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all ${
-                    scrollProgress >= 0.42 && scrollProgress < 0.62
+                    scrollProgress >= 0.35 && scrollProgress < 0.52
                       ? "bg-charcoal text-white shadow-sm"
                       : "text-sage-muted hover:text-charcoal"
                   }`}
                 >
-                  02 Faceplate
+                  02 QR Code
                 </button>
                 <button
-                  onClick={() => scrollToProgress(0.72)}
+                  onClick={() => scrollToProgress(0.60)}
                   className={`px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all ${
-                    scrollProgress >= 0.62 && scrollProgress < 0.82
+                    scrollProgress >= 0.52 && scrollProgress < 0.68
                       ? "bg-charcoal text-white shadow-sm"
                       : "text-sage-muted hover:text-charcoal"
                   }`}
                 >
-                  03 Sensing Core
+                  03 Expiry Patch
+                </button>
+                <button
+                  onClick={() => scrollToProgress(0.76)}
+                  className={`px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all ${
+                    scrollProgress >= 0.68 && scrollProgress < 0.85
+                      ? "bg-charcoal text-white shadow-sm"
+                      : "text-sage-muted hover:text-charcoal"
+                  }`}
+                >
+                  04 Chemical Strip
                 </button>
                 <button
                   onClick={() => scrollToProgress(0.92)}
                   className={`px-3 py-1.5 rounded-full text-xs font-mono font-bold transition-all ${
-                    scrollProgress >= 0.82
+                    scrollProgress >= 0.85
                       ? "bg-charcoal text-white shadow-sm"
                       : "text-sage-muted hover:text-charcoal"
                   }`}
                 >
-                  04 Chassis & Straps
+                  05 Reference Scale
                 </button>
               </div>
             </div>
@@ -401,14 +431,14 @@ export default function HomeExplodedSection() {
                   </h3>
                 </div>
 
-                <p className="text-xs text-sage-muted leading-relaxed mb-5 font-normal">
+                <p className="text-xs text-charcoal leading-relaxed mb-5 font-normal">
                   {currentMilestone.description}
                 </p>
 
                 {/* Key Highlights */}
                 <div className="space-y-1.5 mb-5 bg-warm-white/90 p-4 rounded-2xl border border-light-surface">
                   <div className="text-[10px] font-mono text-teal-deep uppercase font-bold mb-1">
-                    Key Engineering Attributes:
+                    Key Attributes & Mechanism:
                   </div>
                   {currentMilestone.highlights.map((h, i) => (
                     <div key={i} className="flex items-start gap-2 text-xs text-charcoal">
